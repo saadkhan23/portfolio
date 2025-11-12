@@ -106,9 +106,9 @@ export default function Home() {
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="py-20 md:py-32 bg-white">
+      <section id="projects" className="py-12 md:py-20 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-16">
+          <div className="mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-slate-900">Featured Projects</h2>
             <p className="text-lg text-slate-600">
               Data-driven projects showcasing full-stack capabilities
@@ -156,9 +156,9 @@ export default function Home() {
       </section>
 
       {/* Races & Extracurricular Section */}
-      <section className="py-20 md:py-32 bg-slate-50">
+      <section id="races" className="py-12 md:py-20 bg-slate-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-16">
+          <div className="mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-slate-900">Races & Endurance Activities</h2>
             <p className="text-lg text-slate-600">
               Beyond data and code — triathlon, cycling, and open water swimming challenges
@@ -204,9 +204,9 @@ export default function Home() {
       </section>
 
       {/* Skills Section */}
-      <section className="py-20 md:py-32 bg-white">
+      <section className="py-12 md:py-20 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-16">
+          <div className="mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-slate-900">Skills & Technologies</h2>
             <p className="text-lg text-slate-600">
               Tools and frameworks I use to build solutions
@@ -237,9 +237,9 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 md:py-32 bg-white">
+      <section className="py-12 md:py-20 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="p-12 text-center border-2 border-slate-900 rounded-lg">
+          <div className="p-8 text-center border-2 border-slate-900 rounded-lg">
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-slate-900">
               Ready to explore?
             </h2>

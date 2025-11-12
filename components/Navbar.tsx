@@ -10,7 +10,7 @@ export default function Navbar() {
   const navLinks = [
     { href: '/', label: 'Home' },
     { href: '/#projects', label: 'Projects' },
-    { href: '/races/ironman-70-3-victoria', label: 'Races' },
+    { href: '/#races', label: 'Races' },
     { href: '/about', label: 'About' },
   ]
 
