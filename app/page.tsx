@@ -78,7 +78,7 @@ export default function Home() {
 
         <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Bold Headline */}
-          <h1 className="text-5xl md:text-7xl font-bold text-slate-900 mb-6 leading-tight">
+          <h1 className="text-6xl md:text-8xl font-bold text-slate-900 mb-6 leading-tight tracking-tight">
             Build from First Principles
           </h1>
 
@@ -91,13 +91,13 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row gap-4">
             <Link
               href="/zameen"
-              className="px-8 py-3 bg-slate-900 text-white font-semibold rounded-lg hover:bg-slate-800 transition-colors flex items-center justify-center gap-2"
+              className="px-8 py-3 bg-amber-900 text-white font-semibold rounded-lg hover:bg-amber-800 transition-colors flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
             >
               View My Work <FiArrowRight size={20} />
             </Link>
             <Link
               href="/about"
-              className="px-8 py-3 border-2 border-slate-900 text-slate-900 font-semibold rounded-lg hover:bg-slate-50 transition-colors"
+              className="px-8 py-3 border-2 border-amber-900 text-amber-900 font-semibold rounded-lg hover:bg-amber-50 transition-colors"
             >
               About Me
             </Link>
@@ -109,7 +109,7 @@ export default function Home() {
       <section id="projects" className="py-12 md:py-20 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-slate-900">Featured Projects</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900">Featured Projects</h2>
             <p className="text-lg text-slate-600">
               Data-driven projects showcasing full-stack capabilities
             </p>
@@ -120,16 +120,16 @@ export default function Home() {
               <Link
                 key={idx}
                 href={project.href}
-                className={`group border border-slate-200 p-8 rounded-lg transition-all ${
-                  project.disabled ? 'opacity-60 cursor-not-allowed' : 'hover:border-slate-400 hover:shadow-md cursor-pointer'
+                className={`group border border-slate-200 p-8 rounded-lg transition-all shadow-md hover:shadow-2xl ${
+                  project.disabled ? 'opacity-60 cursor-not-allowed' : 'hover:border-amber-200 cursor-pointer'
                 }`}
               >
                 <div className="flex items-start justify-between mb-4">
-                  <div className="text-4xl">{project.icon}</div>
-                  {!project.disabled && <FiArrowRight className="text-slate-400 group-hover:text-slate-900 group-hover:translate-x-1 transition-all" size={20} />}
+                  <div className="text-5xl">{project.icon}</div>
+                  {!project.disabled && <FiArrowRight className="text-amber-900 group-hover:text-amber-800 group-hover:translate-x-1 transition-all" size={20} />}
                 </div>
 
-                <h3 className="text-xl font-bold mb-3 text-slate-900 group-hover:text-slate-700 transition-colors">
+                <h3 className="text-2xl font-bold mb-3 text-slate-900 group-hover:text-amber-900 transition-colors">
                   {project.title}
                 </h3>
 
@@ -143,7 +143,9 @@ export default function Home() {
                   {project.tags.map((tag, i) => (
                     <span
                       key={i}
-                      className="text-xs bg-slate-100 text-slate-700 px-3 py-1 rounded-full font-medium"
+                      className={`text-xs px-3 py-1 rounded-full font-medium ${
+                        i === 0 ? 'bg-amber-100 text-amber-900' : 'bg-slate-100 text-slate-700'
+                      }`}
                     >
                       {tag}
                     </span>
@@ -159,7 +161,7 @@ export default function Home() {
       <section id="races" className="py-12 md:py-20 bg-slate-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-slate-900">Races & Endurance Activities</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900">Races & Endurance Activities</h2>
             <p className="text-lg text-slate-600">
               Beyond data and code — triathlon, cycling, and open water swimming challenges
             </p>
@@ -170,14 +172,14 @@ export default function Home() {
               <Link
                 key={idx}
                 href={race.href}
-                className="group border border-slate-200 p-8 rounded-lg transition-all bg-white hover:border-slate-400 hover:shadow-md cursor-pointer"
+                className="group border border-slate-200 p-8 rounded-lg transition-all bg-white shadow-md hover:shadow-2xl hover:border-amber-200 cursor-pointer"
               >
                 <div className="flex items-start justify-between mb-4">
-                  <div className="text-4xl">{race.icon}</div>
-                  <FiArrowRight className="text-slate-400 group-hover:text-slate-900 group-hover:translate-x-1 transition-all" size={20} />
+                  <div className="text-5xl">{race.icon}</div>
+                  <FiArrowRight className="text-amber-900 group-hover:text-amber-800 group-hover:translate-x-1 transition-all" size={20} />
                 </div>
 
-                <h3 className="text-xl font-bold mb-3 text-slate-900 group-hover:text-slate-700 transition-colors">
+                <h3 className="text-2xl font-bold mb-3 text-slate-900 group-hover:text-amber-900 transition-colors">
                   {race.title}
                 </h3>
 
@@ -191,7 +193,9 @@ export default function Home() {
                   {race.tags.map((tag, i) => (
                     <span
                       key={i}
-                      className="text-xs bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-medium"
+                      className={`text-xs px-3 py-1 rounded-full font-medium ${
+                        i === 0 ? 'bg-amber-100 text-amber-900' : 'bg-slate-100 text-slate-700'
+                      }`}
                     >
                       {tag}
                     </span>
@@ -207,7 +211,7 @@ export default function Home() {
       <section className="py-12 md:py-20 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-slate-900">Skills & Technologies</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900">Skills & Technologies</h2>
             <p className="text-lg text-slate-600">
               Tools and frameworks I use to build solutions
             </p>
@@ -215,9 +219,9 @@ export default function Home() {
 
           <div className="grid md:grid-cols-2 gap-8">
             {skills.map((skillGroup, idx) => (
-              <div key={idx} className="border border-slate-200 p-6 rounded-lg">
+              <div key={idx} className="border border-slate-200 p-6 rounded-lg shadow-md hover:shadow-lg transition-all">
                 <h3 className="text-xl font-bold mb-4 flex items-center gap-2 text-slate-900">
-                  <FiStar className="text-slate-900" size={20} />
+                  <FiStar className="text-amber-900" size={20} />
                   {skillGroup.category}
                 </h3>
                 <div className="flex flex-wrap gap-2">
@@ -239,8 +243,8 @@ export default function Home() {
       {/* CTA Section */}
       <section className="py-8 md:py-12 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="p-8 text-center border-2 border-slate-900 rounded-lg">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-slate-900">
+          <div className="p-8 text-center border-2 border-amber-900 rounded-lg shadow-lg bg-gradient-to-br from-white to-amber-50">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900">
               Ready to explore?
             </h2>
             <p className="text-lg mb-8 text-slate-600">
@@ -248,7 +252,7 @@ export default function Home() {
             </p>
             <Link
               href="/zameen"
-              className="inline-block px-8 py-3 bg-slate-900 text-white font-bold rounded-lg hover:bg-slate-800 transition-colors"
+              className="inline-block px-8 py-3 bg-amber-900 text-white font-bold rounded-lg hover:bg-amber-800 transition-colors shadow-lg hover:shadow-xl"
             >
               View Analysis →
             </Link>
