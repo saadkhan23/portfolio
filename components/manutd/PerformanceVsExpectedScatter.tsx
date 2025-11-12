@@ -55,7 +55,10 @@ export function PerformanceVsExpectedScatter({ data }: Props) {
           }}
           labelFormatter={() => ''}
         />
-        <Legend />
+        <Legend
+          wrapperStyle={{ paddingTop: '20px' }}
+          contentStyle={{ fontSize: '14px', color: '#334155' }}
+        />
 
         {/* Man Utd (red) */}
         <Scatter

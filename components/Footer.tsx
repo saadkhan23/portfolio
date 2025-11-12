@@ -27,8 +27,8 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="text-slate-400 hover:text-white transition-colors">
-                  More Coming Soon
+                <Link href="/manutd" className="text-slate-400 hover:text-white transition-colors">
+                  Manchester United Analysis
                 </Link>
               </li>
             </ul>

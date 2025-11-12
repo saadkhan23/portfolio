@@ -52,7 +52,10 @@ export function AttackingEdgeScatter({ data }: Props) {
           }}
           labelFormatter={() => ''}
         />
-        <Legend />
+        <Legend
+          wrapperStyle={{ paddingTop: '20px' }}
+          contentStyle={{ fontSize: '14px', color: '#334155' }}
+        />
 
         {/* Man Utd (highlighted in red) */}
         <Scatter
