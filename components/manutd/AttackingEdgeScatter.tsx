@@ -20,8 +20,8 @@ export function AttackingEdgeScatter({ data }: Props) {
   }
 
   return (
-    <ResponsiveContainer width="100%" height={400}>
-      <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
+    <ResponsiveContainer width="100%" height={450}>
+      <ScatterChart margin={{ top: 20, right: 20, bottom: 80, left: 20 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
         <XAxis
           dataKey="progressive_carries"
@@ -52,7 +52,7 @@ export function AttackingEdgeScatter({ data }: Props) {
           }}
           labelFormatter={() => ''}
         />
-        <Legend wrapperStyle={{ paddingTop: '20px' }} />
+        <Legend wrapperStyle={{ paddingTop: '30px', display: 'flex', justifyContent: 'center' }} />
 
         {/* Man Utd (highlighted in red) */}
         <Scatter
