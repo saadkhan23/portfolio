@@ -2,7 +2,15 @@ import Link from 'next/link'
 import { FiArrowRight, FiBarChart2, FiCode, FiStar } from 'react-icons/fi'
 
 export default function Home() {
-  const projects = [
+  const projects: Array<{
+    title: string
+    description: string
+    stats: string
+    href: string
+    tags: string[]
+    icon: string
+    disabled?: boolean
+  }> = [
     {
       title: 'Zameen Real Estate Analysis',
       description: 'Data pipeline for scraping, analyzing, and visualizing Pakistan real estate market data. Built with Playwright, Pandas, and interactive charts.',
