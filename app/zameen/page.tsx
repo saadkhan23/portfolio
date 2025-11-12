@@ -50,7 +50,7 @@ export default function ZameenPage() {
           </p>
           <div className="flex flex-wrap gap-4">
             <a
-              href="https://github.com/saadkhan/zameen"
+              href="https://github.com/saadkhan23/zameen"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 px-6 py-3 bg-slate-900 text-white font-bold rounded-lg hover:bg-slate-800 transition-colors"
@@ -307,7 +307,7 @@ export default function ZameenPage() {
               View the complete project on GitHub including source code, detailed documentation, and raw data.
             </p>
             <a
-              href="https://github.com/saadkhan/zameen"
+              href="https://github.com/saadkhan23/zameen"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block px-8 py-3 bg-slate-900 text-white font-bold rounded-lg hover:bg-slate-800 transition-colors"
