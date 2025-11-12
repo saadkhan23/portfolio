@@ -12,13 +12,39 @@ export default function Home() {
       icon: '📊',
     },
     {
-      title: 'Coming Soon',
-      description: 'More projects in development. Check back soon!',
-      stats: 'Building something cool',
-      href: '#',
-      tags: ['Ideas', 'Work in Progress'],
-      icon: '🚀',
-      disabled: true,
+      title: 'Why Manchester United Sucks',
+      description: 'Interactive analysis of Manchester United\'s decline since 2013. Exploring attacking edge, performance metrics, and what went wrong with togglable visualizations.',
+      stats: '26 seasons | 50+ teams | Interactive scatterplots',
+      href: '/manutd',
+      tags: ['Sports Analytics', 'Interactive Viz', 'Data Storytelling', 'React'],
+      icon: '⚽',
+    },
+  ]
+
+  const races = [
+    {
+      title: 'Ironman 70.3 Victoria',
+      description: 'Completed a full sprint triathlon in Victoria, BC. Swim, bike, run across 7 hours 35 minutes with training insights.',
+      stats: '1.9km swim | 90km bike | 21.1km run | May 2024',
+      href: '/races/ironman-70-3-victoria',
+      tags: ['Triathlon', 'Endurance', 'Training', 'Strava'],
+      icon: '🏃',
+    },
+    {
+      title: 'Whistler Granfondo 2024',
+      description: 'Alpine cycling challenge through the Whistler trails. 121km with 2,300m elevation gain testing endurance and climbing ability.',
+      stats: '121km | 2,300m elevation | 24.2 km/h avg | September 2024',
+      href: '/races/whistler-granfondo-2024',
+      tags: ['Cycling', 'Mountain Biking', 'Endurance'],
+      icon: '🚴',
+    },
+    {
+      title: 'Canada Day 2km Open Water Swim',
+      description: 'Post-Ironman training swim in open water. Building ocean swimming skills and confidence in natural water environments.',
+      stats: '2km open water | Training focus | Strava linked',
+      href: '/races/canada-day-2km-swim',
+      tags: ['Swimming', 'Open Water', 'Training'],
+      icon: '🏊',
     },
   ]
 
@@ -101,6 +127,54 @@ export default function Home() {
                     <span
                       key={i}
                       className="text-xs bg-slate-100 text-slate-700 px-3 py-1 rounded-full font-medium"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Races & Extracurricular Section */}
+      <section className="py-20 md:py-32 bg-slate-50">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-slate-900">Races & Endurance Activities</h2>
+            <p className="text-lg text-slate-600">
+              Beyond data and code — triathlon, cycling, and open water swimming challenges
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {races.map((race, idx) => (
+              <Link
+                key={idx}
+                href={race.href}
+                className="group border border-slate-200 p-8 rounded-lg transition-all bg-white hover:border-slate-400 hover:shadow-md cursor-pointer"
+              >
+                <div className="flex items-start justify-between mb-4">
+                  <div className="text-4xl">{race.icon}</div>
+                  <FiArrowRight className="text-slate-400 group-hover:text-slate-900 group-hover:translate-x-1 transition-all" size={20} />
+                </div>
+
+                <h3 className="text-xl font-bold mb-3 text-slate-900 group-hover:text-slate-700 transition-colors">
+                  {race.title}
+                </h3>
+
+                <p className="text-slate-600 mb-4">{race.description}</p>
+
+                <p className="text-sm text-slate-500 mb-4 font-mono">
+                  {race.stats}
+                </p>
+
+                <div className="flex flex-wrap gap-2">
+                  {race.tags.map((tag, i) => (
+                    <span
+                      key={i}
+                      className="text-xs bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-medium"
                     >
                       {tag}
                     </span>

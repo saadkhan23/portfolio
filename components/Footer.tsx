@@ -39,7 +39,7 @@ export default function Footer() {
             <h3 className="text-white font-bold mb-4">Connect</h3>
             <div className="flex space-x-4">
               <a
-                href="https://github.com/saadkhan"
+                href="https://github.com/saadkhan23"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-slate-400 hover:text-white transition-colors"
@@ -48,7 +48,7 @@ export default function Footer() {
                 <FiGithub size={24} />
               </a>
               <a
-                href="https://linkedin.com/in/saad-khan"
+                href="https://www.linkedin.com/in/saad-khan-86939469/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-slate-400 hover:text-white transition-colors"

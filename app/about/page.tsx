@@ -58,7 +58,7 @@ export default function AboutPage() {
           Interested in data projects, strategy roles, or just want to chat about how to extract insights from messy
           data? I'd love to hear from you.
         </p>
-        <a href="mailto:hello@example.com" className="text-blue-600 font-bold hover:underline">
+        <a href="mailto:saad.khaan@live.com" className="text-blue-600 font-bold hover:underline">
           Send me an email
         </a>
       </div>
