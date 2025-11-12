@@ -25,9 +25,9 @@ export function AttackingEdgeScatter({ data }: Props) {
         <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
         <XAxis
           dataKey="progressive_carries"
-          name="Progressive Carries/90"
+          name="Progressive Passes/90"
           type="number"
-          label={{ value: 'Progressive Carries per 90', position: 'bottom', offset: 10 }}
+          label={{ value: 'Progressive Passes per 90', position: 'bottom', offset: 10 }}
           stroke="#64748b"
         />
         <YAxis

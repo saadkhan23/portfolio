@@ -9,7 +9,6 @@ export default function Navbar() {
 
   const navLinks = [
     { href: '/', label: 'Home' },
-    { href: '/zameen', label: 'Zameen Analysis' },
     { href: '/races/ironman-70-3-victoria', label: 'Races' },
     { href: '/about', label: 'About' },
   ]
@@ -19,11 +18,8 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">SK</span>
-            </div>
-            <span className="font-bold text-lg hidden sm:inline">Saad Khan</span>
+          <Link href="/" className="font-bold text-lg text-slate-900 hover:text-slate-600 transition-colors">
+            Saad Khan
           </Link>
 
           {/* Desktop Navigation */}
