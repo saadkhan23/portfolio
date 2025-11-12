@@ -66,8 +66,17 @@ export default function Home() {
   return (
     <>
       {/* Hero Section - Bold Minimalist */}
-      <section className="bg-white pt-20 md:pt-32 pb-16 md:pb-24">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="relative pt-20 md:pt-32 pb-16 md:pb-24 overflow-hidden">
+        {/* Background gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-white via-slate-50 to-slate-100"></div>
+
+        {/* Large geometric circle - top right */}
+        <div className="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-br from-slate-200 to-slate-100 rounded-full opacity-20 blur-3xl"></div>
+
+        {/* Large geometric circle - bottom left */}
+        <div className="absolute -bottom-20 -left-40 w-80 h-80 bg-gradient-to-tr from-slate-100 to-slate-50 rounded-full opacity-15 blur-3xl"></div>
+
+        <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Bold Headline */}
           <h1 className="text-5xl md:text-7xl font-bold text-slate-900 mb-6 leading-tight">
             Build from First Principles
