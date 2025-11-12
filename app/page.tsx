@@ -106,7 +106,7 @@ export default function Home() {
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="py-12 md:py-20 bg-gradient-to-br from-white via-slate-50 to-amber-50">
+      <section id="projects" className="py-12 md:py-20 bg-gradient-to-br from-white to-slate-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12">
             <h2 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900">Featured Projects</h2>
@@ -158,7 +158,7 @@ export default function Home() {
       </section>
 
       {/* Races & Extracurricular Section */}
-      <section id="races" className="py-12 md:py-20 bg-gradient-to-br from-slate-50 via-slate-100 to-amber-50">
+      <section id="races" className="py-12 md:py-20 bg-gradient-to-br from-slate-50 to-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12">
             <h2 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900">Races & Endurance Activities</h2>
@@ -208,7 +208,7 @@ export default function Home() {
       </section>
 
       {/* Skills Section */}
-      <section className="py-12 md:py-20 bg-gradient-to-br from-white via-amber-50 to-slate-50">
+      <section className="py-12 md:py-20 bg-gradient-to-br from-slate-50 to-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12">
             <h2 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900">Skills & Technologies</h2>
@@ -241,7 +241,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-8 md:py-12 bg-gradient-to-b from-slate-50 to-white">
+      <section className="py-8 md:py-12 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="p-8 text-center border-2 border-amber-900 rounded-lg shadow-lg bg-gradient-to-br from-white to-amber-50">
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900">
