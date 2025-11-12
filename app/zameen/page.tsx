@@ -251,7 +251,7 @@ export default function ZameenPage() {
                 <div>
                   <h3 className="font-bold text-slate-900 mb-2">Outliers are opportunities.</h3>
                   <p className="text-slate-600 leading-relaxed">
-                    We identified 8-12 statistically underpriced properties per precinct (>10% below median). The anomalies in data often point to where inefficiencies exist.
+                    We identified 8-12 statistically underpriced properties per precinct (&gt;10% below median). The anomalies in data often point to where inefficiencies exist.
                   </p>
                 </div>
               </div>
