@@ -1,10 +1,98 @@
 'use client'
 
-import { ConstructionCostChart, CostPerSqYdChart, PropertySizeChart } from '@/components/zameen/ConstructionCostChart'
+import { useEffect, useState } from 'react'
+import { ConstructionCostChartFromData } from '@/components/zameen/ConstructionCostChartFromData'
+import { SizeVsPriceSummary } from '@/components/zameen/SizeVsPriceSummary'
+import { BargainsSummary } from '@/components/zameen/BargainsSummary'
 import { PrecinctComparison } from '@/components/zameen/PrecinctComparison'
 import { FiExternalLink, FiGithub } from 'react-icons/fi'
 
+interface ConstructionCostData {
+  precinct: string
+  median_cost_per_sq_yd: number
+  p25_cost_per_sq_yd: number
+  p75_cost_per_sq_yd: number
+  n_properties: number
+}
+
+interface SizeVsPriceData {
+  precinct: string
+  n_houses: number
+  median_size_sq_yd: number
+  median_price: number
+  median_price_per_sq_yd: number
+  regression_slope: number
+  regression_intercept: number
+  r_squared: number
+}
+
+interface BargainSummaryData {
+  precinct: string
+  n_houses: number
+  n_bargains: number
+  bargain_pct: number
+  median_price_per_sq_yd: number
+  std_price_per_sq_yd: number
+  min_bargain_price_per_sq_yd: number
+  max_bargain_price_per_sq_yd: number
+}
+
+interface TopBargainData {
+  precinct: string
+  price: number
+  size_sq_yd: number
+  price_per_sq_yd: number
+  z_score: number
+  is_bargain: number
+}
+
 export default function ZameenPage() {
+  const [constructionData, setConstructionData] = useState<ConstructionCostData[] | null>(null)
+  const [sizeVsPriceData, setSizeVsPriceData] = useState<SizeVsPriceData[] | null>(null)
+  const [bargainsSummary, setBargainsSummary] = useState<BargainSummaryData[] | null>(null)
+  const [topBargains, setTopBargains] = useState<TopBargainData[] | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true)
+        setError(null)
+
+        const [constructionRes, sizeVsPriceRes, bargainsSummaryRes, topBargainsRes] = await Promise.all([
+          fetch('/data/zameen/construction_cost_summary.json'),
+          fetch('/data/zameen/size_vs_price_summary.json'),
+          fetch('/data/zameen/bargains_summary.json'),
+          fetch('/data/zameen/top_bargains.json'),
+        ])
+
+        if (!constructionRes.ok) throw new Error('Failed to load construction cost data')
+        if (!sizeVsPriceRes.ok) throw new Error('Failed to load size vs price data')
+        if (!bargainsSummaryRes.ok) throw new Error('Failed to load bargains summary')
+        if (!topBargainsRes.ok) throw new Error('Failed to load top bargains')
+
+        const [construction, sizeVsPrice, bargains, topBargains] = await Promise.all([
+          constructionRes.json(),
+          sizeVsPriceRes.json(),
+          bargainsSummaryRes.json(),
+          topBargainsRes.json(),
+        ])
+
+        setConstructionData(construction)
+        setSizeVsPriceData(sizeVsPrice)
+        setBargainsSummary(bargains)
+        setTopBargains(topBargains)
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to load analysis data')
+        console.error('Error loading analysis data:', err)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [])
   const stats = [
     { label: 'Properties Analyzed', value: '202', icon: '🏠' },
     { label: 'Precincts Compared', value: '3', icon: '📍' },
@@ -135,51 +223,62 @@ export default function ZameenPage() {
         </div>
       </section>
 
-      {/* Interactive Charts */}
-      <section className="py-12 md:py-16 bg-white border-t border-slate-200">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold mb-12">Market Analysis</h2>
-
-          {/* Chart 1 */}
-          <div className="border border-slate-200 p-8 rounded-lg mb-8">
-            <h3 className="text-2xl font-bold mb-6 text-slate-900">Construction Cost Breakdown by Precinct</h3>
-            <p className="text-slate-600 mb-6">
-              Comparison of house prices, plot prices, and implied construction costs. Notice how Precinct 5's higher
-              absolute costs correlate with significantly larger properties.
-            </p>
-            <ConstructionCostChart />
-            <p className="text-sm text-slate-500 mt-4 italic">
-              Hover over bars to see detailed values. House median prices include construction; plot prices are land only.
-            </p>
+      {/* Data-Driven Analysis Section */}
+      {loading ? (
+        <section className="py-12 md:py-16 bg-white border-t border-slate-200">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-center h-40">
+              <div className="text-center">
+                <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-slate-300 border-t-slate-900 mb-4"></div>
+                <p className="text-slate-600">Loading analysis…</p>
+              </div>
+            </div>
           </div>
-
-          {/* Chart 2 */}
-          <div className="border border-slate-200 p-8 rounded-lg mb-8">
-            <h3 className="text-2xl font-bold mb-6 text-slate-900">Construction Cost per Square Yard</h3>
-            <p className="text-slate-600 mb-6">
-              When normalized by property size, construction costs are nearly identical (PKR 79-80K/sq yd). This indicates
-              uniform labor and material costs across precincts, with market segmentation driven by property size preference.
-            </p>
-            <CostPerSqYdChart />
-            <p className="text-sm text-slate-500 mt-4 italic">
-              This normalized metric enables fair comparison across different property sizes.
-            </p>
+        </section>
+      ) : error ? (
+        <section className="py-12 md:py-16 bg-white border-t border-slate-200">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="bg-red-50 border border-red-200 p-6 rounded-lg">
+              <p className="text-red-700 font-medium">Error loading analysis: {error}</p>
+            </div>
           </div>
+        </section>
+      ) : (
+        <>
+          {/* 1. Construction Cost Analysis */}
+          {constructionData && (
+            <section className="py-12 md:py-16 bg-white border-t border-slate-200">
+              <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="border border-slate-200 p-8 rounded-lg">
+                  <ConstructionCostChartFromData data={constructionData} />
+                </div>
+              </div>
+            </section>
+          )}
 
-          {/* Chart 3 */}
-          <div className="border border-slate-200 p-8 rounded-lg">
-            <h3 className="text-2xl font-bold mb-6 text-slate-900">Average Property Size by Precinct</h3>
-            <p className="text-slate-600 mb-6">
-              Precinct 5 averages 500 sq yards, while Precincts 6 & 8 average 272 sq yards. This 1.8x size difference
-              explains the absolute cost differential.
-            </p>
-            <PropertySizeChart />
-            <p className="text-sm text-slate-500 mt-4 italic">
-              Size directly impacts absolute construction costs, even when per-unit costs are similar.
-            </p>
-          </div>
-        </div>
-      </section>
+          {/* 2. Size vs Price Analysis */}
+          {sizeVsPriceData && (
+            <section className="py-12 md:py-16 bg-white border-t border-slate-200">
+              <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="border border-slate-200 p-8 rounded-lg">
+                  <SizeVsPriceSummary data={sizeVsPriceData} />
+                </div>
+              </div>
+            </section>
+          )}
+
+          {/* 3. Bargain Detection */}
+          {bargainsSummary && topBargains && (
+            <section className="py-12 md:py-16 bg-white border-t border-slate-200">
+              <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="border border-slate-200 p-8 rounded-lg">
+                  <BargainsSummary bargainsSummary={bargainsSummary} topBargains={topBargains} />
+                </div>
+              </div>
+            </section>
+          )}
+        </>
+      )}
 
       {/* Key Findings */}
       <section className="py-12 md:py-16 bg-white">

@@ -1,66 +1,87 @@
-'use client'
+"use client";
 
-import Link from 'next/link'
-import { useState } from 'react'
-import { HiMenu, HiX } from 'react-icons/hi'
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
 
-export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false)
+const navItems = [
+  { href: "/", label: "Home" },
+  { href: "/zameen", label: "Zameen" },
+  { href: "/manutd", label: "Man Utd" },
+  { href: "/races", label: "Races" },
+];
 
-  const navLinks = [
-    { href: '/', label: 'Home' },
-    { href: '/#projects', label: 'Projects' },
-    { href: '/#races', label: 'Races' },
-    { href: '/about', label: 'About' },
-  ]
+export function Navbar() {
+  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-50 bg-white shadow-md">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <Link href="/" className="font-bold text-lg text-slate-900 hover:text-slate-600 transition-colors">
+    <header className="border-b border-slate-900 bg-slate-950/95 backdrop-blur">
+      <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+        <Link href="/" className="flex items-baseline gap-2">
+          <span className="text-sm font-semibold tracking-[0.2em] text-slate-300 uppercase">
             Saad Khan
-          </Link>
+          </span>
+          <span className="hidden text-xs text-slate-500 sm:inline">
+            Data · Strategy · Build
+          </span>
+        </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-8">
-            {navLinks.map((link) => (
+        {/* Desktop nav */}
+        <nav className="hidden gap-6 text-sm sm:flex">
+          {navItems.map((item) => {
+            const active = pathname === item.href;
+            return (
               <Link
-                key={link.href}
-                href={link.href}
-                className="text-slate-600 hover:text-blue-600 transition-colors font-medium"
+                key={item.href}
+                href={item.href}
+                className={
+                  "border-b-2 pb-1 transition-colors " +
+                  (active
+                    ? "border-sky-400 text-sky-300"
+                    : "border-transparent text-slate-400 hover:text-slate-100")
+                }
               >
-                {link.label}
+                {item.label}
               </Link>
-            ))}
-          </div>
+            );
+          })}
+        </nav>
 
-          {/* Mobile menu button */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-slate-600 hover:text-blue-600"
-          >
-            {isOpen ? <HiX size={24} /> : <HiMenu size={24} />}
-          </button>
-        </div>
-
-        {/* Mobile Navigation */}
-        {isOpen && (
-          <div className="md:hidden pb-4 space-y-2">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="block text-slate-600 hover:text-blue-600 py-2 px-4 rounded hover:bg-slate-100 transition-colors"
-                onClick={() => setIsOpen(false)}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-        )}
+        {/* Mobile */}
+        <button
+          className="sm:hidden text-slate-300"
+          onClick={() => setOpen((prev) => !prev)}
+          aria-label="Toggle navigation"
+        >
+          {open ? "Close" : "Menu"}
+        </button>
       </div>
-    </nav>
-  )
+
+      {open && (
+        <nav className="border-t border-slate-900 bg-slate-950 sm:hidden">
+          <div className="mx-auto flex max-w-5xl flex-col px-4 py-3 text-sm">
+            {navItems.map((item) => {
+              const active = pathname === item.href;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={
+                    "py-1 " +
+                    (active
+                      ? "text-sky-300"
+                      : "text-slate-400 hover:text-slate-100")
+                  }
+                  onClick={() => setOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+          </div>
+        </nav>
+      )}
+    </header>
+  );
 }
