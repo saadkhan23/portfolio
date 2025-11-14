@@ -1,32 +1,35 @@
 [
   {
     "precinct": "bahria_town_precinct_5",
-    "n_houses": 62,
-    "n_bargains": 15,
-    "bargain_pct": 24.19,
+    "n_houses": 58,
+    "n_bargains": 11,
+    "bargain_pct": 18.97,
     "median_price_per_sq_yd": 100000.0,
-    "std_price_per_sq_yd": 20382.72,
+    "std_price_per_sq_yd": 19580.75,
     "min_bargain_price_per_sq_yd": 25000.0,
-    "max_bargain_price_per_sq_yd": 80000.0
+    "max_bargain_price_per_sq_yd": 80000.0,
+    "n_grey_structures": 4
   },
   {
     "precinct": "bahria_town_precinct_6",
-    "n_houses": 70,
-    "n_bargains": 17,
-    "bargain_pct": 24.29,
-    "median_price_per_sq_yd": 98026.6,
-    "std_price_per_sq_yd": 20133.88,
-    "min_bargain_price_per_sq_yd": 56250.0,
-    "max_bargain_price_per_sq_yd": 79044.12
+    "n_houses": 61,
+    "n_bargains": 8,
+    "bargain_pct": 13.11,
+    "median_price_per_sq_yd": 100000.0,
+    "std_price_per_sq_yd": 16778.31,
+    "min_bargain_price_per_sq_yd": 61714.29,
+    "max_bargain_price_per_sq_yd": 77205.89,
+    "n_grey_structures": 9
   },
   {
     "precinct": "bahria_town_precinct_8",
-    "n_houses": 70,
-    "n_bargains": 16,
-    "bargain_pct": 22.86,
-    "median_price_per_sq_yd": 108227.95,
-    "std_price_per_sq_yd": 24474.42,
-    "min_bargain_price_per_sq_yd": 54044.12,
-    "max_bargain_price_per_sq_yd": 88235.3
+    "n_houses": 62,
+    "n_bargains": 9,
+    "bargain_pct": 14.52,
+    "median_price_per_sq_yd": 110294.12,
+    "std_price_per_sq_yd": 19845.82,
+    "min_bargain_price_per_sq_yd": 64338.24,
+    "max_bargain_price_per_sq_yd": 91911.77,
+    "n_grey_structures": 8
   }
 ]

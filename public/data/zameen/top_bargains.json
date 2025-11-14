@@ -4,79 +4,89 @@
     "price": 12500000,
     "size_sq_yd": 500.0,
     "price_per_sq_yd": 25000.0,
-    "z_score": -3.6796,
-    "is_bargain": 1
+    "z_score": -3.8303,
+    "is_bargain": 1,
+    "is_grey_structure": 0
   },
   {
     "precinct": "bahria_town_precinct_8",
-    "price": 14700000,
+    "price": 17500000,
     "size_sq_yd": 272.0,
-    "price_per_sq_yd": 54044.12,
-    "z_score": -2.2139,
-    "is_bargain": 1
-  },
-  {
-    "precinct": "bahria_town_precinct_8",
-    "price": 15000000,
-    "size_sq_yd": 272.0,
-    "price_per_sq_yd": 55147.06,
-    "z_score": -2.1688,
-    "is_bargain": 1
+    "price_per_sq_yd": 64338.24,
+    "z_score": -2.3156,
+    "is_bargain": 1,
+    "is_grey_structure": 0
   },
   {
     "precinct": "bahria_town_precinct_6",
-    "price": 15300000,
-    "size_sq_yd": 272.0,
-    "price_per_sq_yd": 56250.0,
-    "z_score": -2.0749,
-    "is_bargain": 1
+    "price": 6000000,
+    "size_sq_yd": 97.22,
+    "price_per_sq_yd": 61714.29,
+    "z_score": -2.2819,
+    "is_bargain": 1,
+    "is_grey_structure": 0
   },
   {
     "precinct": "bahria_town_precinct_6",
-    "price": 15500000,
-    "size_sq_yd": 272.0,
-    "price_per_sq_yd": 56985.3,
-    "z_score": -2.0384,
-    "is_bargain": 1
-  },
-  {
-    "precinct": "bahria_town_precinct_6",
-    "price": 15500000,
-    "size_sq_yd": 272.0,
-    "price_per_sq_yd": 56985.3,
-    "z_score": -2.0384,
-    "is_bargain": 1
-  },
-  {
-    "precinct": "bahria_town_precinct_8",
-    "price": 15900000,
-    "size_sq_yd": 272.0,
-    "price_per_sq_yd": 58455.88,
-    "z_score": -2.0336,
-    "is_bargain": 1
-  },
-  {
-    "precinct": "bahria_town_precinct_8",
-    "price": 16000000,
-    "size_sq_yd": 272.0,
-    "price_per_sq_yd": 58823.53,
-    "z_score": -2.0186,
-    "is_bargain": 1
-  },
-  {
-    "precinct": "bahria_town_precinct_6",
-    "price": 16000000,
-    "size_sq_yd": 272.0,
-    "price_per_sq_yd": 58823.53,
-    "z_score": -1.9471,
-    "is_bargain": 1
-  },
-  {
-    "precinct": "bahria_town_precinct_8",
     "price": 17000000,
     "size_sq_yd": 272.0,
     "price_per_sq_yd": 62500.0,
-    "z_score": -1.8684,
-    "is_bargain": 1
+    "z_score": -2.235,
+    "is_bargain": 1,
+    "is_grey_structure": 0
+  },
+  {
+    "precinct": "bahria_town_precinct_8",
+    "price": 18500000,
+    "size_sq_yd": 272.0,
+    "price_per_sq_yd": 68014.71,
+    "z_score": -2.1304,
+    "is_bargain": 1,
+    "is_grey_structure": 0
+  },
+  {
+    "precinct": "bahria_town_precinct_6",
+    "price": 17800000,
+    "size_sq_yd": 272.0,
+    "price_per_sq_yd": 65441.18,
+    "z_score": -2.0597,
+    "is_bargain": 1,
+    "is_grey_structure": 0
+  },
+  {
+    "precinct": "bahria_town_precinct_6",
+    "price": 18000000,
+    "size_sq_yd": 272.0,
+    "price_per_sq_yd": 66176.47,
+    "z_score": -2.0159,
+    "is_bargain": 1,
+    "is_grey_structure": 0
+  },
+  {
+    "precinct": "bahria_town_precinct_6",
+    "price": 7200000,
+    "size_sq_yd": 100.0,
+    "price_per_sq_yd": 72000.0,
+    "z_score": -1.6688,
+    "is_bargain": 1,
+    "is_grey_structure": 0
+  },
+  {
+    "precinct": "bahria_town_precinct_8",
+    "price": 21000000,
+    "size_sq_yd": 272.0,
+    "price_per_sq_yd": 77205.89,
+    "z_score": -1.6673,
+    "is_bargain": 1,
+    "is_grey_structure": 0
+  },
+  {
+    "precinct": "bahria_town_precinct_8",
+    "price": 21000000,
+    "size_sq_yd": 272.0,
+    "price_per_sq_yd": 77205.89,
+    "z_score": -1.6673,
+    "is_bargain": 1,
+    "is_grey_structure": 0
   }
 ]

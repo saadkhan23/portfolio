@@ -2,22 +2,25 @@
   {
     "precinct": "bahria_town_precinct_5",
     "median_cost_per_sq_yd": 79000.0,
-    "p25_cost_per_sq_yd": 64250.0,
-    "p75_cost_per_sq_yd": 83488.38,
-    "n_properties": 62
+    "p25_cost_per_sq_yd": 69000.0,
+    "p75_cost_per_sq_yd": 84662.79,
+    "n_properties": 58,
+    "n_grey_structures": 4
   },
   {
     "precinct": "bahria_town_precinct_6",
-    "median_cost_per_sq_yd": 74026.6,
-    "p25_cost_per_sq_yd": 64168.25,
-    "p75_cost_per_sq_yd": 79735.3,
-    "n_properties": 70
+    "median_cost_per_sq_yd": 76000.0,
+    "p25_cost_per_sq_yd": 67911.77,
+    "p75_cost_per_sq_yd": 80779.41,
+    "n_properties": 61,
+    "n_grey_structures": 9
   },
   {
     "precinct": "bahria_town_precinct_8",
-    "median_cost_per_sq_yd": 80654.41,
-    "p25_cost_per_sq_yd": 69028.36,
-    "p75_cost_per_sq_yd": 88426.47,
-    "n_properties": 70
+    "median_cost_per_sq_yd": 82720.59,
+    "p25_cost_per_sq_yd": 75367.65,
+    "p75_cost_per_sq_yd": 91838.24,
+    "n_properties": 62,
+    "n_grey_structures": 8
   }
 ]

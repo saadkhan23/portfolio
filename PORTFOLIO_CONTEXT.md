@@ -355,7 +355,38 @@ All design tokens centralized in `/lib/designSystem.ts` — update there first, 
 
 ---
 
+## Documentation Maintenance System
+
+### NPM Scripts for Documentation Management
+
+The portfolio includes automated scripts to help keep context docs in sync:
+
+```bash
+npm run docs:check   # Check for pending TODO/FIXME in PORTFOLIO_CONTEXT.md
+npm run docs:files   # See what code files are staged
+npm run docs:update  # Display the update checklist
+```
+
+### Pre-Commit Hook
+
+A `.husky/pre-commit` hook automatically runs before commits. When code files in `app/`, `components/`, or `lib/` are detected, it displays a reminder to update documentation. The hook does NOT block commits—it's just a reminder.
+
+### Files for Documentation Guidance
+
+- **DOCS_UPDATE_CHECKLIST.md** - Step-by-step checklist for what to update
+- **DOCUMENTATION_SYNC_GUIDE.md** - Detailed reference guide with workflows
+- **DOCUMENTATION_STRATEGY.md** - System overview (root directory)
+
+---
+
 ## Version History
+
+- **v1.1** (2025-11-13) - Added documentation maintenance system
+  - Pre-commit hook (.husky/pre-commit) for automatic doc reminders
+  - NPM scripts (docs:check, docs:files, docs:update) for status checks
+  - DOCS_UPDATE_CHECKLIST.md for guided updates
+  - Zameen Key Takeaways section: Converted from bullet points to numbered narrative paragraphs
+  - Package.json: Added three new documentation scripts
 
 - **v1.0** - Initial portfolio context
   - Documented design system

@@ -1,0 +1,30 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# Documentation Update Reminder
+echo ""
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "📋 DOCUMENTATION UPDATE CHECK"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
+
+# Check if code files changed
+if git diff --cached --name-only | grep -E '(app/|components/|lib/)' > /dev/null; then
+    echo "⚠️  Code files detected in staging area."
+    echo ""
+    echo "✓ Have you updated PORTFOLIO_CONTEXT.md with:"
+    echo "  • New/modified components or pages"
+    echo "  • Design system changes"
+    echo "  • Typography or color updates"
+    echo "  • New precinct naming conventions or patterns"
+    echo ""
+    echo "Run: npm run docs:files       (see what code changed)"
+    echo "     npm run docs:check      (check for pending TODOs)"
+    echo "     npm run docs:update     (view update checklist)"
+    echo ""
+fi
+
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
+
+exit 0

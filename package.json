@@ -7,7 +7,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "docs:check": "grep -n 'TODO\\|FIXME\\|UPDATE ME' PORTFOLIO_CONTEXT.md || echo '✓ No pending documentation TODOs'",
+    "docs:files": "echo '=== Modified code files ===' && git diff --name-only --cached | grep -E '(app/|components/|lib/)' || echo 'No code changes staged'",
+    "docs:update": "echo '📝 Review PORTFOLIO_CONTEXT.md and update based on your changes:' && echo '' && cat DOCS_UPDATE_CHECKLIST.md | head -50"
   },
   "keywords": [],
   "author": "Saad Khan",

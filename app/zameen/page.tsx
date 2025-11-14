@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { ConstructionCostChartFromData } from '@/components/zameen/ConstructionCostChartFromData'
 import { SizeVsPriceSummary } from '@/components/zameen/SizeVsPriceSummary'
 import { BargainsSummary } from '@/components/zameen/BargainsSummary'
+import { BeeswarmPricePerSqYd } from '@/components/zameen/BeeswarmPricePerSqYd'
 
 interface ConstructionCostData {
   precinct: string
@@ -50,6 +51,7 @@ export default function ZameenPage() {
   const [sizeVsPriceData, setSizeVsPriceData] = useState<SizeVsPriceData[] | null>(null)
   const [bargainsSummary, setBargainsSummary] = useState<BargainSummaryData[] | null>(null)
   const [topBargains, setTopBargains] = useState<TopBargainData[] | null>(null)
+  const [beeswarmPoints, setBeeswarmPoints] = useState<any[] | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -59,29 +61,33 @@ export default function ZameenPage() {
         setLoading(true)
         setError(null)
 
-        const [constructionRes, sizeVsPriceRes, bargainsSummaryRes, topBargainsRes] = await Promise.all([
+        const [constructionRes, sizeVsPriceRes, bargainsSummaryRes, topBargainsRes, beeswarmRes] = await Promise.all([
           fetch('/data/zameen/construction_cost_summary.json'),
           fetch('/data/zameen/size_vs_price_summary.json'),
           fetch('/data/zameen/bargains_summary.json'),
           fetch('/data/zameen/top_bargains.json'),
+          fetch('/data/zameen/beeswarm_points.json'),
         ])
 
         if (!constructionRes.ok) throw new Error('Failed to load construction cost data')
         if (!sizeVsPriceRes.ok) throw new Error('Failed to load size vs price data')
         if (!bargainsSummaryRes.ok) throw new Error('Failed to load bargains summary')
         if (!topBargainsRes.ok) throw new Error('Failed to load top bargains')
+        if (!beeswarmRes.ok) throw new Error('Failed to load beeswarm points')
 
-        const [construction, sizeVsPrice, bargains, topBargains] = await Promise.all([
+        const [construction, sizeVsPrice, bargains, topBargains, beeswarm] = await Promise.all([
           constructionRes.json(),
           sizeVsPriceRes.json(),
           bargainsSummaryRes.json(),
           topBargainsRes.json(),
+          beeswarmRes.json(),
         ])
 
         setConstructionData(construction)
         setSizeVsPriceData(sizeVsPrice)
         setBargainsSummary(bargains)
         setTopBargains(topBargains)
+        setBeeswarmPoints(beeswarm)
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load analysis data')
         console.error('Error loading analysis data:', err)
@@ -102,11 +108,12 @@ export default function ZameenPage() {
 
         <div className="flex-1 space-y-2">
           <h1 className="text-4xl font-semibold leading-tight text-slate-50 md:text-5xl">
-            Zameen.com Property Analysis
+            Bahria Town Karachi — A Data‑Driven Look
           </h1>
           <p className="max-w-2xl text-sm text-slate-300">
-            Everyone has a theory about Karachi real estate. I pulled hundreds of Bahria Town Karachi listings to answer two simple questions:
-            what does it actually cost to build a home here, and can we systematically spot the under-the-radar deals?
+            Opinions are loud. Data is quiet. I scraped Bahria Town Karachi listings, separated land value from
+            construction cost, and used simple statistics to find homes that are genuinely underpriced — useful if you’re
+            choosing where to live or screening investments.
           </p>
           <p className="max-w-2xl text-sm tracking-wide font-medium text-slate-500" style={{ fontSize: '13px', fontVariant: 'small-caps', letterSpacing: '0.05em', lineHeight: '1.4' }}>
             Tools: Python · Pandas · Playwright · Recharts · Next.js
@@ -187,26 +194,73 @@ export default function ZameenPage() {
         </div>
       </section>
 
+      {/* Lay of the Land */}
+      <section className="space-y-6">
+        <h2 className="text-2xl font-semibold text-slate-50">Lay of the Land</h2>
+        <div className="space-y-4 text-slate-300">
+          <p>
+            Bahria Town Karachi (BTK) is a large, master‑planned community on the edge of Karachi. The draw is
+            consistency: society‑managed security, utilities, road upkeep, parks, mosques, schools, and organized waste/water services.
+          </p>
+          <p>
+            It’s a long‑horizon project built in phases. Multiple precincts are already active and lived in, with ongoing expansion of
+            residential blocks, commercial corridors, schools, and healthcare capacity. The society continues to add amenities and
+            improve internal connectivity over time.
+          </p>
+          <ul className="list-disc pl-5 space-y-1">
+            <li>Monthly maintenance (HOA): about PKR 7,000 (assumed mid‑range).</li>
+            <li>One‑time utilities/connection allowance during build: ≈ PKR 300,000.</li>
+            <li>Trade‑off: longer commutes; car‑first lifestyle; resale can be slower than DHA/Clifton in some segments.</li>
+          </ul>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-slate-400">
+            <div className="border border-slate-800 bg-slate-950 p-4 rounded">
+              <div className="text-xs uppercase tracking-wide text-slate-500 mb-1">Commute (indicative)</div>
+              <div>BTK ↔ Airport: ~45–75 min</div>
+              <div>BTK ↔ Clifton (Dolmen): ~70–110 min</div>
+              <div>BTK ↔ Central (Saddar/LuckyOne): ~60–90 min</div>
+            </div>
+            <div className="border border-slate-800 bg-slate-950 p-4 rounded">
+              <div className="text-xs uppercase tracking-wide text-slate-500 mb-1">On‑site</div>
+              <div>Security access and patrols</div>
+              <div>Schools within the society</div>
+              <div>Hospitals/clinics available</div>
+            </div>
+            <div className="border border-slate-800 bg-slate-950 p-4 rounded">
+              <div className="text-xs uppercase tracking-wide text-slate-500 mb-1">Units</div>
+              <div>1 square yard = 9 square feet</div>
+              <div>10 marla example ≈ 280 sq yd</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Overview */}
       <section className="space-y-6">
         <h2 className="text-2xl font-semibold text-slate-50">Project Overview</h2>
         <div className="space-y-4 text-slate-300">
           <p>
-            This started as a family question: if we moved to Bahria Town Karachi, what would it <em>really</em> cost to build
-            a solid, middle-class home — and how would we know if a listing was a genuine bargain rather than just "cheap"
-            for a bad reason?
+            Two simple ideas drive this work. First, normalize everything by size (price per square yard) so comparisons are fair.
+            Second, separate land from building to understand what a house really costs to construct.
           </p>
+          <div className="space-y-2">
+            <p className="font-semibold text-slate-200">Two ways to estimate construction cost</p>
+            <ul className="list-disc pl-5 space-y-1">
+              <li>
+                Implied method (from listings): Construction cost per sq yd = House price per sq yd − Typical plot price per sq yd.
+              </li>
+              <li>
+                Bottom‑up method (from a builder’s view): Covered area × cost per sq ft + soft costs + contingency + one‑time utilities.
+              </li>
+            </ul>
+            <p className="text-slate-400 text-sm">
+              Example (10 marla ≈ 280 sq yd): Covered area = 280 × 9 × 0.70 × 2 ≈ 3,528 sq ft. At PKR 5,000–5,500 per sq ft,
+              plus soft (3%), contingency (10%), and utilities (~PKR 300k), the build‑only total is ≈ PKR 20.2M–22.2M.
+            </p>
+          </div>
           <p>
-            I scraped house and plot listings for three precincts (Precinct 5, Precinct 6, Precinct 8), converted everything to a per-square-yard
-            basis, and separated land value from construction cost. That gave me two things:
-          </p>
-          <ul className="list-disc pl-5 space-y-1">
-            <li>A realistic estimate of what it costs to build in BTK today.</li>
-            <li>A repeatable way to flag homes that are statistically underpriced.</li>
-          </ul>
-          <p>
-            The result is a small, opinionated model for Karachi property — useful for my family, and reusable for any
-            precinct or city where similar listing data exists.
+            I gathered finished house and plot listings across three precincts (P5, P6, P8), excluded grey/unfinished shells from the numbers,
+            and compared the implied figures against the bottom‑up calculation. The same framework works in any precinct or city with comparable
+            listing data.
           </p>
         </div>
       </section>
@@ -232,6 +286,34 @@ export default function ZameenPage() {
       ) : (
         <section className="space-y-6">
           <h2 className="text-2xl font-semibold text-slate-50">Visual Insights</h2>
+
+          {/* Beeswarm - first orientation visual */}
+          {beeswarmPoints && (
+            <div className="space-y-4">
+              <div className="border border-slate-800 bg-slate-950 px-6 py-6">
+                <BeeswarmPricePerSqYd data={beeswarmPoints} />
+              </div>
+              {sizeVsPriceData && (
+                <div className="border border-slate-800 bg-slate-950 px-6 py-5">
+                  <h4 className="text-sm font-bold text-slate-200 mb-2">What this shows</h4>
+                  <p className="text-slate-300 text-sm leading-relaxed">
+                    P5 clusters near {(() => {
+                      const p5 = sizeVsPriceData.find(d => d.precinct.endsWith('_5'))
+                      return p5 ? `PKR ${(p5.median_price/1_000_000).toFixed(0)}M` : 'its median'
+                    })()} — largely because plots are bigger (~500 sq yd).
+                    P6 sits around {(() => {
+                      const p6 = sizeVsPriceData.find(d => d.precinct.endsWith('_6'))
+                      return p6 ? `PKR ${(p6.median_price/1_000_000).toFixed(0)}M` : 'its median'
+                    })()} and P8 around {(() => {
+                      const p8 = sizeVsPriceData.find(d => d.precinct.endsWith('_8'))
+                      return p8 ? `PKR ${(p8.median_price/1_000_000).toFixed(0)}M` : 'its median'
+                    })()}, with P8 generally pricing higher per unit. The vertical spread within each precinct is the
+                    “noise” — finishes, street/park/corner, and seller expectations. Green dots are the ones worth a closer look.
+                  </p>
+                </div>
+              )}
+            </div>
+          )}
 
           {/* Construction Cost Analysis */}
           {constructionData && (
@@ -265,37 +347,40 @@ export default function ZameenPage() {
       {/* Key Takeaways */}
       <section className="space-y-6">
         <h2 className="text-2xl font-semibold text-slate-50">What This Tells Us</h2>
-        <div className="space-y-3 text-slate-300">
-          <div className="flex gap-3">
-            <span className="text-sky-500 flex-shrink-0 mt-1 text-lg">▪</span>
+        <div className="space-y-6 text-slate-300">
+          <div>
+            <p className="mb-3">
+              <strong>1. Building a house in BTK costs less about "luck" and more about math.</strong>
+            </p>
             <p>
-              <strong>Construction costs are boring — and that's powerful.</strong> Most homes cluster around
-              70k–80k PKR per sq yd for construction. That stability makes it easy to separate build cost from land value
-              and negotiation games.
+              Once you strip away land value and seller drama, construction costs settle into a surprisingly tight band — roughly 70k–80k PKR per sq yd across all three precincts. That consistency is useful: it tells you that quality and materials aren't swinging wildly. The noise in the market comes from everything around the house — location, expectations, and personality — not the structure itself.
             </p>
           </div>
-          <div className="flex gap-3">
-            <span className="text-sky-500 flex-shrink-0 mt-1 text-lg">▪</span>
+
+          <div>
+            <p className="mb-3">
+              <strong>2. Precincts behave differently — some like orderly markets, others like Karachi.</strong>
+            </p>
             <p>
-              <strong>Some precincts price like a spreadsheet, others like a bazaar.</strong> Precinct 6 has the tightest
-              size–price relationship; Precinct 8 is much noisier. Where pricing is predictable, bargains stand out cleanly.
-              Where it's messy, you need more context.
+              Precinct 6 prices homes the way a spreadsheet would: size explains price cleanly. Precinct 8… doesn't. It's messier, more emotional, more local. In a disciplined market, underpriced homes pop out immediately. In a noisy one, you have to think harder about why something looks cheap.
             </p>
           </div>
-          <div className="flex gap-3">
-            <span className="text-sky-500 flex-shrink-0 mt-1 text-lg">▪</span>
+
+          <div>
+            <p className="mb-3">
+              <strong>3. "Bargains" aren't rare — but they're rarely random.</strong>
+            </p>
             <p>
-              <strong>Real bargains are common, but measurable.</strong> Roughly 24% of listings in this sample are
-              statistically underpriced. The point isn't that every one is a good buy — it's that you can find
-              them systematically instead of scrolling Zameen on vibes.
+              About one in four homes in this sample is genuinely underpriced relative to its neighbours. That doesn't mean 24% are great deals — many of the extreme outliers are unfinished shells — but it shows you don't need to scroll Zameen like a zombie to find opportunities. You can measure mispricing.
             </p>
           </div>
-          <div className="flex gap-3">
-            <span className="text-sky-500 flex-shrink-0 mt-1 text-lg">▪</span>
+
+          <div>
+            <p className="mb-3">
+              <strong>4. The framework generalizes — you can point it at any precinct or city.</strong>
+            </p>
             <p>
-              <strong>The pipeline scales beyond this family question.</strong> Swap in a different precinct or city,
-              refresh the data, and the same logic will estimate build costs and surface potential bargains.
-              It's a small, reusable engine for exploring real estate markets.
+              Swap in another neighbourhood's listings, rerun the pipeline, and you'll get the same three layers of insight: the real cost of building, how rational the market is, and where the anomalies live. It's a reusable engine for understanding any real estate market with enough data — not just BTK.
             </p>
           </div>
         </div>
@@ -327,19 +412,19 @@ export default function ZameenPage() {
 
           {/* Implied Construction Cost */}
           <div className="border border-slate-800 bg-slate-950 px-6 py-6">
-            <h3 className="text-lg font-semibold text-slate-50 mb-4">Implied Construction Cost</h3>
+            <h3 className="text-lg font-semibold text-slate-50 mb-4">Implied Construction Cost (Plain English)</h3>
             <ul className="space-y-2 text-slate-300">
               <li className="flex gap-3">
                 <span className="text-sky-500 flex-shrink-0">▪</span>
-                <span>For each precinct, compute median plot price per square yard</span>
+                <span>Typical plot price per sq yd: compute the precinct’s median from plot listings.</span>
               </li>
               <li className="flex gap-3">
                 <span className="text-sky-500 flex-shrink-0">▪</span>
-                <span>For each house: (total price ÷ size) minus median plot price = implied construction cost</span>
+                <span>For each finished house: (house price ÷ size) − (typical plot price) = implied construction cost per sq yd.</span>
               </li>
               <li className="flex gap-3">
                 <span className="text-sky-500 flex-shrink-0">▪</span>
-                <span>Aggregate p25, median, and p75 percentiles per precinct</span>
+                <span>Summarize p25/median/p75 across houses in that precinct.</span>
               </li>
             </ul>
           </div>
