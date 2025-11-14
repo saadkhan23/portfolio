@@ -111,11 +111,11 @@ export default function ManUtdPage() {
                 <div className="grid md:grid-cols-2 gap-4 mt-6">
                   <div className="bg-white p-4 rounded border border-slate-200">
                     <p className="font-bold text-slate-900 mb-2">The Ferguson Era (2000-2013)</p>
-                    <p className="text-sm text-slate-600">1.925 goals per game. Consistently the most potent attacking force in the Premier League.</p>
+                    <p className="text-slate-600">1.925 goals per game. Consistently the most potent attacking force in the Premier League.</p>
                   </div>
                   <div className="bg-white p-4 rounded border border-slate-200">
                     <p className="font-bold text-slate-900 mb-2">Post-Ferguson (2014-2025)</p>
-                    <p className="text-sm text-slate-600">1.482 goals per game. 23% decline. Fell from #1 to #5 among rivals.</p>
+                    <p className="text-slate-600">1.482 goals per game. 23% decline. Fell from #1 to #5 among rivals.</p>
                   </div>
                 </div>
               </div>
@@ -145,7 +145,7 @@ export default function ManUtdPage() {
                 ) : (
                   <div className="h-96 flex items-center justify-center text-slate-500">Loading chart...</div>
                 )}
-                <p className="text-sm text-slate-500 mt-6 italic">
+                <p className="text-slate-500 mt-6 italic">
                   Red point: Manchester United. Gray points: Other Premier League teams. Higher is better.
                 </p>
               </div>
@@ -176,7 +176,7 @@ export default function ManUtdPage() {
                 ) : (
                   <div className="h-96 flex items-center justify-center text-slate-500">Loading chart...</div>
                 )}
-                <p className="text-sm text-slate-500 mt-6 italic">
+                <p className="text-slate-500 mt-6 italic">
                   Points above the diagonal line are overperforming xG. Below = underperforming.
                 </p>
               </div>
@@ -206,7 +206,7 @@ export default function ManUtdPage() {
                 ) : (
                   <div className="h-96 flex items-center justify-center text-slate-500">Loading chart...</div>
                 )}
-                <p className="text-sm text-slate-500 mt-6 italic">
+                <p className="text-slate-500 mt-6 italic">
                   Red line: Actual goals scored. Gray dashed line: Expected goals (xG/90) from shot quality.
                 </p>
               </div>

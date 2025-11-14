@@ -38,6 +38,11 @@ const formatPkPerSqYdLong = (value: number): string => {
 
 const getPrecinctLabel = (precinctKey: string): string => {
   const match = precinctKey.match(/precinct_(\d+)/)
+  return match ? `Precinct ${match[1]}` : precinctKey
+}
+
+const getPrecinctShortLabel = (precinctKey: string): string => {
+  const match = precinctKey.match(/precinct_(\d+)/)
   return match ? `P${match[1]}` : precinctKey
 }
 
@@ -55,6 +60,29 @@ const getBarColor = (rSquared: number): string => {
   return '#93c5fd' // light blue
 }
 
+interface CustomTooltipProps {
+  active?: boolean
+  payload?: any[]
+  label?: string
+  chartData?: any[]
+}
+
+const CustomTooltip = ({ active, payload, label, chartData }: CustomTooltipProps) => {
+  if (active && payload && payload.length) {
+    const item = chartData?.find(d => d.shortLabel === label)
+    const precintName = item?.displayLabel || label
+    const value = payload[0].value
+
+    return (
+      <div className="bg-slate-900 border border-slate-700 p-3 rounded text-slate-200">
+        <p className="font-medium text-sm">{precintName}</p>
+        <p className="text-sm">{formatPkPerSqYdShort(value)} PKR/sq yd</p>
+      </div>
+    )
+  }
+  return null
+}
+
 export function SizeVsPriceSummary({ data }: Props) {
   if (!data || data.length === 0) {
     return <div className="text-slate-600">No data available</div>
@@ -63,79 +91,61 @@ export function SizeVsPriceSummary({ data }: Props) {
   const chartData = data.map((item) => ({
     ...item,
     displayLabel: getPrecinctLabel(item.precinct),
+    shortLabel: getPrecinctShortLabel(item.precinct),
   }))
 
   return (
     <div className="w-full space-y-6">
       <div>
-        <h3 className="text-2xl font-bold text-slate-900 mb-2">Does size actually explain price?</h3>
-        <p className="text-slate-600 mb-6">
-          Median price per sq yd in each precinct, with R² showing how strongly size predicts price (higher R² = more disciplined pricing).
+        <h3 className="text-2xl font-bold text-slate-50 mb-3">Does size actually explain price?</h3>
+        <p className="text-slate-300">
+          Bigger homes should cost more — but some markets are much more disciplined than others. In a "disciplined" precinct, buyers roughly agree on what a home should cost for its size. In a noisy one, other factors like street, view, condition, and seller mood start to dominate.
         </p>
       </div>
 
       {/* Bar Chart with R² labels */}
-      <div className="w-full h-56">
+      <div className="w-full h-72">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={chartData}
-            margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
+            margin={{ top: 30, right: 30, bottom: 20, left: 60 }}
           >
-            <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+            <CartesianGrid strokeDasharray="5 5" stroke="#475569" />
             <XAxis
               dataKey="displayLabel"
               stroke="#64748b"
-              tick={{ fontSize: 12 }}
+              tick={{ fontSize: 14, fill: '#94a3b8', fontWeight: 500 }}
             />
             <YAxis
               stroke="#64748b"
               tickFormatter={formatPkPerSqYdShort}
-              tick={{ fontSize: 12 }}
-              label={{ value: 'Price per Sq Yd (PKR)', angle: -90, position: 'insideLeft' }}
+              tick={{ fontSize: 14, fill: '#94a3b8' }}
+              label={{ value: 'Price per Sq Yd', angle: -90, position: 'insideLeft', style: { fontSize: 13, fill: '#94a3b8' } }}
             />
             <Tooltip
-              formatter={(value: any) => formatPkPerSqYdLong(value as number)}
-              contentStyle={{
-                backgroundColor: '#fff',
-                border: '1px solid #e2e8f0',
-                borderRadius: '6px',
-                padding: '8px',
-              }}
-              cursor={{ fill: '#f3f4f6' }}
+              content={<CustomTooltip chartData={chartData} />}
+              cursor={{ fill: '#334155' }}
             />
 
-            <Bar dataKey="median_price_per_sq_yd" radius={[4, 4, 0, 0]}>
-              {chartData.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={getBarColor(entry.r_squared)} />
-              ))}
+            <Bar dataKey="median_price_per_sq_yd" fill="#0ea5e9" radius={[4, 4, 0, 0]}>
               <Label
                 position="top"
                 formatter={(value: number) => `R² ${value.toFixed(2)}`}
-                fill="#64748b"
-                fontSize={11}
-                offset={4}
+                fill="#94a3b8"
+                fontSize={13}
+                fontWeight={500}
+                offset={8}
               />
             </Bar>
           </BarChart>
         </ResponsiveContainer>
       </div>
 
-      {/* Text Summary */}
-      <div className="space-y-3">
-        {chartData.map((item) => (
-          <div key={item.precinct} className="text-sm text-slate-600">
-            <span className="font-medium text-slate-900">{item.displayLabel}:</span>
-            {' '}
-            {formatPkPerSqYdLong(item.median_price_per_sq_yd)}, R² ≈ {item.r_squared.toFixed(2)} ({getRSquaredDescription(item.r_squared)}).
-          </div>
-        ))}
-      </div>
-
       {/* Explanation Box */}
-      <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg text-sm text-slate-700">
-        <p className="font-medium text-blue-900 mb-2">What does R² mean?</p>
-        <p>
-          R² measures how well property size explains price variation in each precinct. A higher R² means buyers in that precinct are more "rational" (size-driven pricing). Lower R² means other factors like location preference or individual seller expectations matter more.
+      <div className="bg-slate-800 border border-slate-700 p-6 rounded-lg">
+        <p className="text-slate-300 leading-relaxed">
+          <strong className="text-slate-50 block mb-2">What does R² mean here?</strong>
+          It&apos;s just a measure of how predictable pricing is. Higher R² means size explains most of the price, so buyers broadly agree on what they&apos;re paying for. Lower R² means other factors — location within the precinct, finish, amenities, individual expectations — matter more than size.
         </p>
       </div>
     </div>

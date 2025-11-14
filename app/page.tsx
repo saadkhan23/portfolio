@@ -76,7 +76,7 @@ export default function HomePage() {
               <h3 className="text-base font-semibold text-slate-100 mb-2">
                 Want to dig into the code or data?
               </h3>
-              <p className="text-sm text-slate-400">
+              <p className="text-slate-400">
                 The repos and analysis notebooks are open. I'm happy to walk through
                 the pipeline, the trade-offs, or how I'd extend this for a real product.
               </p>

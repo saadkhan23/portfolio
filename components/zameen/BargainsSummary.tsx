@@ -53,7 +53,18 @@ const formatPkPerSqYd = (value: number): string => {
 
 const getPrecinctLabel = (precinctKey: string): string => {
   const match = precinctKey.match(/precinct_(\d+)/)
+  return match ? `Precinct ${match[1]}` : precinctKey
+}
+
+const getPrecinctShortLabel = (precinctKey: string): string => {
+  const match = precinctKey.match(/precinct_(\d+)/)
   return match ? `P${match[1]}` : precinctKey
+}
+
+// Calculate percentage below median for a bargain
+const calculatePercentBelowMedian = (bargainData: TopBargainData[], precinctMedian: number): number => {
+  if (precinctMedian <= 0) return 0
+  return ((precinctMedian - bargainData.price_per_sq_yd) / precinctMedian) * 100
 }
 
 const COLORS = ['#ef4444', '#f3f4f6'] // Red for bargains, gray for others
@@ -82,7 +93,7 @@ export function BargainsSummary({ bargainsSummary, topBargains }: Props) {
 
   // Data for comparison bars
   const comparisonData = bargainsSummary.map((item) => ({
-    displayLabel: getPrecinctLabel(item.precinct),
+    displayLabel: getPrecinctShortLabel(item.precinct),
     bargain_pct: item.bargain_pct,
   }))
 
@@ -94,47 +105,52 @@ export function BargainsSummary({ bargainsSummary, topBargains }: Props) {
   return (
     <div className="w-full space-y-8">
       <div>
-        <h3 className="text-2xl font-bold text-slate-900 mb-2">Where are the genuine bargains?</h3>
-        <p className="text-slate-600 mb-6">
-          A bargain here is a house that is both below the precinct median price per sq yd and at least 0.8 standard deviations cheaper than the local norm.
+        <h3 className="text-2xl font-bold text-slate-50 mb-3">Where are the genuine bargains?</h3>
+        <p className="text-slate-300">
+          Not every cheap listing is a bargain. Some are small, awkwardly located, or need a full gut renovation. Here, a "bargain" is a house that&apos;s both below the typical price per square yard and unusually cheap compared to other homes in the same precinct. These are the listings where something interesting is happening — and where an investor should probably look twice.
         </p>
       </div>
 
       {/* Donut Chart */}
-      <div className="flex flex-col items-center">
-        <div className="w-48 h-48">
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Pie
-                data={overallStats.pieData}
-                cx="50%"
-                cy="50%"
-                innerRadius={60}
-                outerRadius={90}
-                paddingAngle={2}
-                dataKey="value"
-              >
-                {overallStats.pieData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index]} />
-                ))}
-              </Pie>
-            </PieChart>
-          </ResponsiveContainer>
+      <div className="flex flex-col md:flex-row md:items-center md:gap-12 gap-8">
+        <div className="flex justify-center md:justify-start flex-shrink-0">
+          <div className="w-56 h-56">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={overallStats.pieData}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={65}
+                  outerRadius={105}
+                  paddingAngle={2}
+                  dataKey="value"
+                >
+                  {overallStats.pieData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index]} />
+                  ))}
+                </Pie>
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
         </div>
-        <div className="text-center mt-4">
-          <p className="text-3xl font-bold text-slate-900">
+        <div className="flex-1">
+          <p className="text-5xl font-bold text-sky-400">
             ≈{overallStats.bargainPct.toFixed(0)}%
           </p>
-          <p className="text-sm text-slate-600">of houses are bargains</p>
-          <p className="text-xs text-slate-500 mt-2">
+          <p className="text-base text-slate-300 mt-2">of homes flagged as bargains</p>
+          <p className="text-xs text-slate-500 mt-3">
             {overallStats.totalBargains} of {overallStats.totalHouses} properties
+          </p>
+          <p className="text-slate-300 mt-8 leading-relaxed">
+            Roughly one in four homes in this sample is statistically underpriced. That&apos;s not a gut feel — it&apos;s based on how far each property sits below the local going rate for its size in that precinct.
           </p>
         </div>
       </div>
 
       {/* Comparison bars */}
       <div>
-        <h4 className="text-sm font-bold text-slate-900 mb-4">Bargain % by Precinct</h4>
+        <h4 className="text-sm font-bold text-slate-200 mb-4">Bargain % by Precinct</h4>
         <div className="w-full h-40">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={comparisonData} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
@@ -171,46 +187,47 @@ export function BargainsSummary({ bargainsSummary, topBargains }: Props) {
       {/* Top 5 Bargains Table */}
       {topFiveBargains && topFiveBargains.length > 0 && (
         <div>
-          <h4 className="text-sm font-bold text-slate-900 mb-4">Top 5 Most Underpriced</h4>
-          <div className="overflow-x-auto border border-slate-200 rounded-lg">
-            <table className="w-full text-xs">
-              <thead className="bg-slate-50 border-b border-slate-200">
+          <h4 className="text-base font-bold text-slate-50 mb-4">Top 5 Most Underpriced</h4>
+          <div className="overflow-x-auto border border-slate-700 rounded-lg">
+            <table className="w-full text-sm">
+              <thead className="bg-slate-700 border-b border-slate-600">
                 <tr>
-                  <th className="px-3 py-2 text-left font-medium text-slate-700">Precinct</th>
-                  <th className="px-3 py-2 text-right font-medium text-slate-700">Price</th>
-                  <th className="px-3 py-2 text-right font-medium text-slate-700">Size (sq yd)</th>
-                  <th className="px-3 py-2 text-right font-medium text-slate-700">Price/sq yd</th>
-                  <th className="px-3 py-2 text-right font-medium text-slate-700">Z-Score</th>
+                  <th className="px-5 py-4 text-left font-semibold text-slate-100">Precinct</th>
+                  <th className="px-5 py-4 text-right font-semibold text-slate-100">Price</th>
+                  <th className="px-5 py-4 text-right font-semibold text-slate-100">Size (sq yd)</th>
+                  <th className="px-5 py-4 text-right font-semibold text-slate-100">Price/sq yd</th>
+                  <th className="px-5 py-4 text-right font-semibold text-slate-100">% Below Typical</th>
                 </tr>
               </thead>
               <tbody>
-                {topFiveBargains.map((bargain, idx) => (
-                  <tr key={idx} className={idx % 2 === 0 ? 'bg-white' : 'bg-slate-50'}>
-                    <td className="px-3 py-2 text-slate-900 font-medium">
-                      {getPrecinctLabel(bargain.precinct)}
-                    </td>
-                    <td className="px-3 py-2 text-right text-slate-700">
-                      {formatPkPrice(bargain.price)}
-                    </td>
-                    <td className="px-3 py-2 text-right text-slate-700">
-                      {bargain.size_sq_yd.toLocaleString()}
-                    </td>
-                    <td className="px-3 py-2 text-right text-slate-700">
-                      {formatPkPerSqYd(bargain.price_per_sq_yd)}
-                    </td>
-                    <td className="px-3 py-2 text-right">
-                      <span className="font-bold text-green-600">
-                        {bargain.z_score.toFixed(2)}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
+                {topFiveBargains.map((bargain, idx) => {
+                  const precintMedian = bargainsSummary.find(p => p.precinct === bargain.precinct)?.median_price_per_sq_yd || 0
+                  const percentBelow = calculatePercentBelowMedian(bargain, precintMedian)
+                  return (
+                    <tr key={idx} className={idx % 2 === 0 ? 'bg-slate-900' : 'bg-slate-850'}>
+                      <td className="px-5 py-4 text-slate-50 font-medium">
+                        {getPrecinctLabel(bargain.precinct)}
+                      </td>
+                      <td className="px-5 py-4 text-right text-slate-300">
+                        {formatPkPrice(bargain.price)}
+                      </td>
+                      <td className="px-5 py-4 text-right text-slate-300">
+                        {bargain.size_sq_yd.toLocaleString()}
+                      </td>
+                      <td className="px-5 py-4 text-right text-slate-300">
+                        {Math.round(bargain.price_per_sq_yd).toLocaleString()}
+                      </td>
+                      <td className="px-5 py-4 text-right">
+                        <span className="font-bold text-green-400 text-base">
+                          −{percentBelow.toFixed(0)}%
+                        </span>
+                      </td>
+                    </tr>
+                  )
+                })}
               </tbody>
             </table>
           </div>
-          <p className="text-xs text-slate-500 mt-3 italic">
-            Z-score measures how many standard deviations below the precinct's typical price a house sits. More negative = deeper discount.
-          </p>
         </div>
       )}
     </div>
