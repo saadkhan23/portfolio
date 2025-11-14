@@ -62,7 +62,7 @@ const getPrecinctShortLabel = (precinctKey: string): string => {
 }
 
 // Calculate percentage below median for a bargain
-const calculatePercentBelowMedian = (bargainData: TopBargainData[], precinctMedian: number): number => {
+const calculatePercentBelowMedian = (bargainData: TopBargainData, precinctMedian: number): number => {
   if (precinctMedian <= 0) return 0
   return ((precinctMedian - bargainData.price_per_sq_yd) / precinctMedian) * 100
 }
