@@ -70,7 +70,7 @@ export function BeeswarmPricePerSqYd({ data }: Props) {
       grouped[d.precinct].push(d)
     })
 
-    const points: Array<{ x: number; y: number; precinct: string; is_bargain: boolean }> = []
+    const points: Array<{ x: number; y: number; precinct: string; is_bargain: boolean; price_per_sq_yd: number; size_sq_yd?: number }> = []
     const groups = Object.keys(grouped).sort((a, b) => precinctIndex(a) - precinctIndex(b))
     const spacing = 1 // gap between categories on x-axis
     groups.forEach((g, gi) => {
